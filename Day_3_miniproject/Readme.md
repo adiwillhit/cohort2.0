@@ -1,0 +1,1 @@
+## The objective of this minni project is to make one note making application which can have display note , update the note feature , delete the previous note feature 
