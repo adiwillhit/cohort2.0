@@ -11,7 +11,7 @@ function App() {
   // we will create one fucntion which will call the fuction 
   function fetchNotes(){
      
-    axios.get('http://localhost:3000/api/notes')
+    axios.get('https://cohort2-0-x5il.onrender.com/api/notes')
     .then((res)=>{
       console.log(res.data.notes);// we will first find the notes then we will save the notes in the notes variable in 
       // and then call that notes in the map 
@@ -38,7 +38,7 @@ function App() {
     
     // now we will create this input from the frontend to the backedn 
 
-    axios.post("http://localhost:3000/api/notes",{
+    axios.post("https://cohort2-0-x5il.onrender.com/api/notes",{
       // this the data i want to send 
       title:title.value,
       description:description.value
@@ -59,7 +59,7 @@ function App() {
     
     //here we will console the noteid 
     console.log(noteId);
-    axios.delete("http://localhost:3000/api/notes/"+noteId)
+    axios.delete("https://cohort2-0-x5il.onrender.com/api/notes/"+noteId)
     .then(res=>{
       console.log(res.data);
       //also we will call the fetchnote fucntion 
