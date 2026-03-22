@@ -4,9 +4,10 @@
 const express= require("express");
 const notesModel = require("./models/notes.model");
 const { default: mongoose } = require("mongoose");
-
+const cors = require("cors")
 
 const app = express();
+app.use(cors());
 
 app.use(express.json());
 
