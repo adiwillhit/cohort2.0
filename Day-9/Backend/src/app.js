@@ -5,9 +5,19 @@ const express= require("express");
 const notesModel = require("./models/notes.model");
 const { default: mongoose } = require("mongoose");
 const cors = require("cors")
-
+const path = require("path") // for wild card absolute path prevetion 
 const app = express();
 app.use(cors());
+
+// here now we will use the middleware which will help to make the public folder avaliable for the backend url to use it
+
+app.use(express.static("./public"))// this will make the public folder avaliable for the public // this make the frontend to deploy on the backend
+
+
+// now as the url requeset to the backend 
+// the file which will check if the file is avaliable for in the public at the given folder then it will return that file other wise it will run the backend
+
+
 
 app.use(express.json());
 
@@ -106,10 +116,19 @@ app.patch("/api/notes/:id",async (req,res)=>{
      });
 
 
-     // this will be updated
+
      
 })
 
+
+// apply the patch api : assignment
+
+
+app.use('*name',(req,res)=>{
+     // __dirname gives the name of absolute path
+     res.sendFile(path.join(__dirname,"..","/public/index.html"))// here to send the file we need to give the absolute path 
+     // for that we use path module 
+})
     
 
 
