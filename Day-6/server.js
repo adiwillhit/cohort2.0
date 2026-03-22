@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 // now here we will create one function to conneect the monogodb database to the server
 
 function connectotdb(){
-    mongoose.connect("mongodb+srv://skilldev012_db_user:GGWkvQT0JxYLZ4LK@cluster0.ldttazo.mongodb.net/day-6")// /day-6 : if exsits then use it otherwise use it 
+    mongoose.connect(process.env.MONGO_URI)// /day-6 : if exsits then use it otherwise use it 
     .then(()=>{
         console.log("connected to db");
         
