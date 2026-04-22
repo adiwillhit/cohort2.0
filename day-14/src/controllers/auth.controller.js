@@ -1,6 +1,10 @@
 const userModel =require("../models/user.model");
 const jwt  = require("jsonwebtoken");
-const crypto  = require("crypto")
+// const crypto  = require("crypto")
+const bcrypt = require("bcryptjs");
+// we will use bcrypt instead of crypto 
+//for high security
+
 
 
 async function  registercontroller (req,res){
@@ -37,8 +41,10 @@ async function  registercontroller (req,res){
         })
     }
     // now we will save this user data in the database
-    const hash = crypto.createHash('sha256').update(password).digest('hex');
+    // const hash = crypto.createHash('sha256').update(password).digest('hex');
 
+    // use of bcrypt
+    const hash =await  bcrypt.hash(password,10);
     
     const user = await userModel.create({
         username,
@@ -95,10 +101,11 @@ async function logincontroller(req,res){
     else{
         // this means valid email and username 
         // we will chekc for the password
-        const hash = crypto.createHash("sha256").update(password).digest('hex');
+        // const hash = crypto.createHash("sha256").update(password).digest('hex');
 
         // now we will compare 
-        if(isUserExists.password===hash){
+        const isPasswordValid = await bcrypt.compare(password,isUserExists.password);
+        if(isPasswordValid){
             //this means valid 
             
             // we will provide a new token to it
