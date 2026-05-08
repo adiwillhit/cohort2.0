@@ -2,7 +2,7 @@ const postModel = require("../models/post.model")
 const ImageKit = require("@imagekit/nodejs")
 const {toFile} = require("@imagekit/nodejs")
 const jwt = require("jsonwebtoken")
-
+const likeModel =require("../models/like.model")
 
 const imagekit = ImageKit({
     privateKey:process.env.IMAGEKIT_PRIVATE_KEY
@@ -55,7 +55,6 @@ async function getPostController(req,res) {
     
 }
 
-
 async function getPostDetailsController(req,res){
 
     // first we wil take the token from the cookie to find which user it is
@@ -104,8 +103,46 @@ async function getPostDetailsController(req,res){
     
 }
 
+async function likePostController(req,res){
+    const username =req.user.username
+    const postId = req.params.postId
+
+    ///now if we want to like that post so we will check if the post exists or not 
+
+    const post = await postModel.findById(postId);
+
+    //if the post is not found we willr return that the post is not foudn 
+
+    if(!post){
+        return res.status(404).json({
+            message:"Post not found"
+        })
+    }
+
+    //now if we found the post no we can like that post 
+
+    //first we will require the like model
+
+
+    const like = await likeModel.create({
+        post:postId,
+        user:username
+    })
+
+
+    res.status(200).json({
+        message:"Post liked successfully",
+        like
+    })
+
+
+
+
+}
+
 module.exports = {
     createPostController,
     getPostController,
-    getPostDetailsController
+    getPostDetailsController,
+    likePostController
 }
